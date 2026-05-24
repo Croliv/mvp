@@ -33,28 +33,47 @@ export default function App() {
         (m) => m.id === materialSelecionado
     )
 
-    async function handleSvg(svgText) {
+    const [sheetSize, setSheetSize] = useState('full')
+
+    const sheetWidth = sheetSize === 'half' ? material.largura / 2 : material.largura
+    const sheetHeight = material.altura
+    const sheetValue = sheetSize === 'half' ? material.precoChapa / 2 : material.precoChapa
+
+
+    const [svgText, setSvgText] = useState(null)
+
+
+    async function runNesting(svg) {
         setLoading(true)
         setBins([])
 
         try {
             const svgNestResult = await svgNestEngine({
-                svgText,
-                sheetWidth: material.largura,
-                sheetHeight: material.altura,
+                svgText: svg,
+                sheetWidth,
+                sheetHeight,
                 spacing: material.espacamento
             })
 
-            const parsed = parseSvgNestResult(
-                svgNestResult.placementSvg
-            )
-
+            const parsed = parseSvgNestResult(svgNestResult.placementSvg)
             setBins(parsed)
-
         } finally {
             setLoading(false)
         }
     }
+
+    async function handleSvg(text) {
+        setSvgText(text)
+        await runNesting(text)
+    }
+
+    useEffect(() => {
+        if (!svgText) return
+        runNesting(svgText)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [materialSelecionado, sheetSize])
+
+
 
     return (
         <div className="p-10 space-y-10">
@@ -107,6 +126,28 @@ export default function App() {
                 </div>
             </div>
 
+            <div className="space-y-2">
+                <label className="font-bold block">Tamanho</label>
+
+                <select
+                    value={sheetSize}
+                    onChange={(e) => setSheetSize(e.target.value)}
+                    className="border rounded p-2 w-full max-w-xl"
+                >
+                    <option value="full">Chapa inteira</option>
+                    <option value="half">Meia chapa</option>
+                </select>
+
+                <div className="text-sm text-gray-600">
+                    {sheetSize === 'half'
+                        ? `Meia chapa: ${Math.round(material.largura / 2)}x${material.altura}mm |
+                           Valor: R$ ${Math.round(material.precoChapa / 2)}`
+                        : `Chapa inteira: ${material.largura}x${material.altura}mm |
+                           Valor: R$ ${material.precoChapa}`}
+                </div>
+            </div>
+
+
             <UploadSVG onLoad={handleSvg} />
 
             {loading && (
@@ -117,14 +158,15 @@ export default function App() {
 
             <Resultados
                 bins={bins}
-                valorChapa={material.precoChapa}
+                valorChapa={sheetValue}
             />
 
             <SheetCanvas
                 bins={bins}
-                sheetWidth={material.largura}
-                sheetHeight={material.altura}
+                sheetWidth={sheetWidth}
+                sheetHeight={sheetHeight}
             />
+
 
             <a
                 href="https://instagram.com/rafaelcroliv"
