@@ -1,0 +1,213 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+/* Tema "Rei do ACM" */
+.theme-rei {
+  --text: #f4efe6;
+  --text-h: #fff7e6;
+  --bg: linear-gradient(180deg, #0f0b2b 0%, #1b0538 60%, #0a0714 100%);
+  --border: rgba(255,255,255,0.06);
+  --code-bg: rgba(255,255,255,0.02);
+  --accent: #ffd166;
+  --accent-bg: rgba(255,209,102,0.08);
+  --accent-border: rgba(255,209,102,0.35);
+  --social-bg: rgba(255,255,255,0.04);
+  --shadow: rgba(0,0,0,0.6) 0 10px 20px;
+  --heading: 'Cinzel', var(--heading);
+  --sans: 'Montserrat', var(--sans);
+}
+
+/* Theme-specific element styles */
+#root.theme-rei {
+  background: var(--bg);
+  color: var(--text);
+}
+
+#root.theme-rei h1,
+#root.theme-rei h2 {
+  color: var(--text-h);
+  text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+#root.theme-rei .counter,
+#root.theme-rei code {
+  background: rgba(255,255,255,0.02);
+}
+
+#root.theme-rei button,
+#root.theme-rei select,
+#root.theme-rei input {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+#root.theme-rei select {
+  appearance: none;
+}
+
+#root.theme-rei .text-sm {
+  color: rgba(255,255,255,0.8);
+}
+
+#root.theme-rei a[style] {
+  background: rgba(0,0,0,0.35);
+  color: var(--text-h);
+}
+
+/* Accent usage */
+#root.theme-rei .accent {
+  color: #2b1a00;
+  background: var(--accent);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Component visuals */
+.upload-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+}
+
+.upload-card .file-input {
+  width: 100%;
+  color: var(--text-h);
+  background: transparent;
+  border: none;
+}
+
+.result-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  border: 1px solid var(--border);
+}
+
+.result-line {
+  color: var(--text-h);
+}
+
+.canvas-title {
+  color: var(--text-h);
+  text-align: center;
+}
+
+.canvas-subtitle {
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+.canvas-preview {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
